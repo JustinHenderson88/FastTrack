@@ -8,19 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    //set grid layout
+    let gridItems: [GridItem] = [
+        GridItem(.adaptive(minimum: 150, maximum: 200)),
+    ]
+    @AppStorage("searchText") var searchText = ""
+    
     var body: some View {
-//        let gridItems: [GridItem] = [
-//            GridItem(.fixed(100)),
-//            GridItem(.fixed(100)),
-//            GridItem(.fixed(100))
-//        ]
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        
+        ScrollView (.horizontal, showsIndicators: false){
+            LazyHGrid(rows: gridItems) {
+                ForEach(1..<100) { i in
+                    Color.red
+                }
+            }
         }
-        .padding()
+        
     }
 }
 
