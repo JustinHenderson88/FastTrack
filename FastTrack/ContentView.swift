@@ -9,11 +9,11 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        let gridItems: [GridItem] = [
-            GridItem(.fixed(100)),
-            GridItem(.fixed(100)),
-            GridItem(.fixed(100))
-        ]
+//        let gridItems: [GridItem] = [
+//            GridItem(.fixed(100)),
+//            GridItem(.fixed(100)),
+//            GridItem(.fixed(100))
+//        ]
         VStack {
             Image(systemName: "globe")
                 .imageScale(.large)
