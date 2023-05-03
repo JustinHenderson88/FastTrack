@@ -16,14 +16,23 @@ struct ContentView: View {
     
     var body: some View {
         
-        ScrollView (.horizontal, showsIndicators: false){
-            LazyHGrid(rows: gridItems) {
-                ForEach(1..<100) { i in
-                    Color.red
+        VStack{
+            HStack{
+                TextField("Search for a song", text: $searchText)
+                Button("Search"){
+                    //more code here
                 }
             }
         }
         
+        ScrollView (.horizontal, showsIndicators: false){
+            LazyHGrid(rows: gridItems) {
+                ForEach(1..<100) { i in
+                    Color.red
+                        .frame(width: 150, height: 150)
+                }
+            }
+        }
     }
 }
 
