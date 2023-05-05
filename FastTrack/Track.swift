@@ -17,7 +17,7 @@ struct Track: Identifiable, Decodable {
     let previewUrl: URL
     let artWorkUrl100: String
     
-    //string replacement to request a 300 X 300 image
+    //string replacement to request a 300 X 300 image from Itunes rather than the default 100 X 100 image
     var artworkURL: URL? {
         let replacedString = artWorkUrl100.replacingOccurrences(of: "100 X 100", with: "300 X 300")
         return URL(string: replacedString)
