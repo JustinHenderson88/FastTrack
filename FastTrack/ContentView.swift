@@ -24,10 +24,14 @@ struct ContentView: View {
             }
             .padding([.top, .horizontal])
             
-            ScrollView (.horizontal, showsIndicators: false){
-                LazyHGrid(rows: gridItems) {
+            ScrollView {
+                LazyVGrid(columns: gridItems) {
                     ForEach(tracks) { track in
-                        AsyncImage(url: track.artworkURL)
+                        AsyncImage(url: track.artworkURL) { image in
+                            image.resizable ()
+                        } placeholder: {
+                            ProgressView()
+                        }
                             .frame(width: 150, height: 150)
                     }
                 }
@@ -37,14 +41,19 @@ struct ContentView: View {
     
     func startSearch() {
         Task {
-            try await performSearch()
+            do {
+                try await performSearch()
+                } catch {
+                    print(error)
+            }
         }
     }
     
     //“fetch the iTunes API URL with the user’s search text, download the data, convert it into a SearchResult object, then store its results array somewhere”
     func performSearch() async throws {
-        guard let url = URL(string: "https://itunes.apple.com/search?term=\(searchText)&limit=100&entity=song") else {return}
-        let (data,_) = try await URLSession.shared.data(from:url)
+        guard let searchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {return}
+        guard let url = URL(string:"https://itunes.apple.com/search?term=\(searchText)&limit=100&entity=song") else { return }
+        let (data, _) = try await URLSession.shared.data(from: url)
         let searchResult = try JSONDecoder().decode(SearchResult.self, from: data)
         tracks = searchResult.results
     }
