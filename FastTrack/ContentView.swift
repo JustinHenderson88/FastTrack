@@ -27,12 +27,38 @@ struct ContentView: View {
             ScrollView {
                 LazyVGrid(columns: gridItems) {
                     ForEach(tracks) { track in
-                        AsyncImage(url: track.artworkURL) { image in
-                            image.resizable ()
-                        } placeholder: {
-                            ProgressView()
+                        //create clickable button to play the selected track
+                        Button{
+                            print("Play \(track.trackName)")
+                            } label: {
+                            ZStack (alignment: .bottom) {
+                                AsyncImage(url: track.artworkURL) { phase in
+                                    switch phase {
+                                    case.success(let image):
+                                        image.resizable()
+                                    case.failure(_):
+                                        Image(systemName: "questionmark")
+                                            .symbolVariant(.circle)
+                                            .font(.largeTitle)
+                                    default:
+                                        ProgressView()
+                                    }
+                                }
+                                .frame(width: 150, height: 150)
+                                //overlay artist name over track image
+                                VStack{
+                                    Text(track.trackName)
+                                        .font(.headline)
+                                    
+                                    Text(track.artistName)
+                                        .foregroundStyle(.secondary)
+                                }
+                                .padding(5)
+                                .frame(width: 150)
+                                .background(.regularMaterial)
+                            }
                         }
-                            .frame(width: 150, height: 150)
+                            .buttonStyle(.borderless)
                     }
                 }
             } //end scroll view
