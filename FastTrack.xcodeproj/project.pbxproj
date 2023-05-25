@@ -12,6 +12,7 @@
 		3C1C09DD29FF0677000AEF40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C1C09DC29FF0677000AEF40 /* Assets.xcassets */; };
 		3C1C09E029FF0677000AEF40 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C1C09DF29FF0677000AEF40 /* Preview Assets.xcassets */; };
 		3C72D1062A029125008BD8EC /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C72D1052A029125008BD8EC /* Track.swift */; };
+		3C92AEC82A1F894200329788 /* TrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C92AEC72A1F894200329788 /* TrackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		3C1C09DF29FF0677000AEF40 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3C1C09E129FF0677000AEF40 /* FastTrack.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FastTrack.entitlements; sourceTree = "<group>"; };
 		3C72D1052A029125008BD8EC /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		3C92AEC72A1F894200329788 /* TrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				3C1C09D829FF0676000AEF40 /* FastTrackApp.swift */,
 				3C1C09DA29FF0676000AEF40 /* ContentView.swift */,
+				3C92AEC72A1F894200329788 /* TrackView.swift */,
 				3C72D1052A029125008BD8EC /* Track.swift */,
 				3C1C09DC29FF0677000AEF40 /* Assets.xcassets */,
 				3C1C09E129FF0677000AEF40 /* FastTrack.entitlements */,
@@ -144,6 +147,7 @@
 			files = (
 				3C1C09DB29FF0676000AEF40 /* ContentView.swift in Sources */,
 				3C1C09D929FF0676000AEF40 /* FastTrackApp.swift in Sources */,
+				3C92AEC82A1F894200329788 /* TrackView.swift in Sources */,
 				3C72D1062A029125008BD8EC /* Track.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
