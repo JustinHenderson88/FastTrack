@@ -65,6 +65,7 @@ struct ContentView: View {
         }
     }
     
+    
     func startSearch() {
         Task {
             do {
