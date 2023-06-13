@@ -6,14 +6,18 @@
 //
 
 import SwiftUI
+import AVKit
 
 struct ContentView: View {
     
     let gridItems: [GridItem] = [
         GridItem(.adaptive(minimum: 150, maximum: 200)),
     ]
+    
     @AppStorage("searchText") var searchText = ""
+    @State private var audioPlayer: AVPlayer?
     @State private var tracks = [Track]()
+    
     
     var body: some View {
         VStack{
@@ -27,9 +31,10 @@ struct ContentView: View {
             ScrollView {
                 LazyVGrid(columns: gridItems) {
                     ForEach(tracks) { track in
+                        TrackView(track: track, onSelected: play)
                         //create clickable button to play the selected track
                         Button{
-                            print("Play \(track.trackName)")
+                            play(track)
                             } label: {
                             ZStack (alignment: .bottom) {
                                 AsyncImage(url: track.artworkURL) { phase in
@@ -76,6 +81,8 @@ struct ContentView: View {
         }
     }
     
+
+    
     //“fetch the iTunes API URL with the user’s search text, download the data, convert it into a SearchResult object, then store its results array somewhere”
     func performSearch() async throws {
         guard let searchText = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {return}
@@ -83,6 +90,12 @@ struct ContentView: View {
         let (data, _) = try await URLSession.shared.data(from: url)
         let searchResult = try JSONDecoder().decode(SearchResult.self, from: data)
         tracks = searchResult.results
+    }
+    
+    func play(_ track: Track){
+        audioPlayer?.pause()
+        audioPlayer = AVPlayer(url: track.previewUrl)
+        audioPlayer?.play()
     }
 }
     
