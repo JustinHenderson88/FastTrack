@@ -34,10 +34,9 @@ struct ContentView: View {
             }
             .padding([.top, .horizontal])
             
-            
                 switch searchState {
                 case.none:
-                    Text("Enter search term here")
+                    Text("Enter a search term to begin")
                         .frame(maxHeight: .infinity)
                 case.searching:
                     ProgressView()
@@ -54,7 +53,7 @@ struct ContentView: View {
                 case .error:
                     Text("Sorry, your search failed – please check your internet connection then try again.")
                         .frame(maxHeight: .infinity)
-                }
+            }
         }
     }
     
@@ -64,6 +63,7 @@ struct ContentView: View {
         Task {
             do {
                 try await performSearch()
+                searchState = .success
                 } catch {
                     searchState = .error
             }
