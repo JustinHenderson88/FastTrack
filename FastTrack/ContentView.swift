@@ -14,9 +14,15 @@ struct ContentView: View {
         GridItem(.adaptive(minimum: 150, maximum: 200)),
     ]
     
+    //define search states for error handling
+    enum SearchState {
+        case none, searching, error, success
+    }
+    
     @AppStorage("searchText") var searchText = ""
     @State private var audioPlayer: AVPlayer?
     @State private var tracks = [Track]()
+    @State private var searchState = SearchState.none
     
     
     var body: some View {
@@ -28,55 +34,38 @@ struct ContentView: View {
             }
             .padding([.top, .horizontal])
             
-            ScrollView {
-                LazyVGrid(columns: gridItems) {
-                    ForEach(tracks) { track in
-                        TrackView(track: track, onSelected: play)
-                        //create clickable button to play the selected track
-                        Button{
-                            play(track)
-                            } label: {
-                            ZStack (alignment: .bottom) {
-                                AsyncImage(url: track.artworkURL) { phase in
-                                    switch phase {
-                                    case.success(let image):
-                                        image.resizable()
-                                    case.failure(_):
-                                        Image(systemName: "questionmark")
-                                            .symbolVariant(.circle)
-                                            .font(.largeTitle)
-                                    default:
-                                        ProgressView()
-                                    }
-                                }
-                                .frame(width: 150, height: 150)
-                                //overlay artist name over track image
-                                VStack{
-                                    Text(track.trackName)
-                                        .font(.headline)
-                                    
-                                    Text(track.artistName)
-                                        .foregroundStyle(.secondary)
-                                }
-                                .padding(5)
-                                .frame(width: 150)
-                                .background(.regularMaterial)
+            
+                switch searchState {
+                case.none:
+                    Text("Enter search term here")
+                        .frame(maxHeight: .infinity)
+                case.searching:
+                    ProgressView()
+                        .frame(maxHeight: .infinity)
+                case.success:
+                    ScrollView{
+                        LazyVGrid(columns: gridItems){
+                            ForEach(tracks) { track in
+                                TrackView(track: track, onSelected: play)
                             }
                         }
-                            .buttonStyle(.borderless)
-                    }
+                    .padding()
                 }
-            } //end scroll view
+                case .error:
+                    Text("Sorry, your search failed – please check your internet connection then try again.")
+                        .frame(maxHeight: .infinity)
+                }
         }
     }
     
     
     func startSearch() {
+        searchState = .searching
         Task {
             do {
                 try await performSearch()
                 } catch {
-                    print(error)
+                    searchState = .error
             }
         }
     }
